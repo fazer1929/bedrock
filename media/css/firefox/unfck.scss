@@ -82,7 +82,7 @@ main {
     & .mzp-c-card-feature-desc,
     & .mzp-c-hero {
         @include light-links;
-        background-color: $color-ink-80;
+        background-color: $color-purple-90;
         color: $color-white;
     }
 
@@ -121,7 +121,6 @@ main {
         }
     }
 }
-
 
 .mzp-c-notification-bar.mzp-is-sticky {
     top: 100px;
