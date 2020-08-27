@@ -50,7 +50,18 @@
     </div>
     {%- endmacro %}
 
-    {% macro item(label, info, link_text, link_url, id, include_cta=False) -%}
+    <!--
+    <ul>
+      <li>Twitter: need share text, need decide gif link vs page link</li>
+      <li>Download: must be hosted on same domain</li>
+      <li>Link: get feedback working, include protocol</li>
+    </ul>
+    -->
+
+    {% macro item(label, info, link_text, link_url, id, src, include_cta=False) -%}
+    {% set tw_url = link_url %}
+    {% set tw_text = 'test_text' %}
+    {% set tw = 'https://www.twitter.com/intent/tweet?url=' + tw_url + '&text=' + tw_text %}
     <div class="c-item-unfck" id="{{ id }}">
       <h3>{{ label }}</h3>
       <p>{{ info }}</p>
@@ -62,12 +73,12 @@
       {% endif %}
 
       <div class="c-item-img">
-        <img class="c-item-gif" src="{{ static('img/firefox/campaign/unfck/firecode.gif') }}">
+        <img class="c-item-gif" src="{{ src }}">
         <ul class="c-item-share">
           <!-- TODO: GA props -->
-          <li><a class="c-item-link js-twitter-share" target="_blank" rel="noopener noreferrer" href="https://www.twitter.com/intent/tweet?url=https%3A%2F%2Fmzl.la%2Fmanifesto&text=I+support+the+vision+of+a+better%2C+healthier+internet+from+%40mozilla%2C+will+you+join+me%3F" data-link-type="social share" data-link-name="Twitter"><span class="c-item-icon twitter"></span><span class="c-item-text">Share</span></a></li>
-          <li><a class="c-item-link" href="{{ static('img/firefox/campaign/unfck/firecode.gif') }}" download><span class="c-item-icon download"></span><span class="c-item-text">Download</span></a></li>
-          <li><button class="c-item-link js-copy-link" type="button" data-clipboard-text="https://bukk.it/firecode.gif"><span class="c-item-icon link"></span><span class="c-item-text">Copy Link</span></button></li>
+          <li><a class="c-item-link js-twitter-share" target="_blank" rel="noopener noreferrer" href="{{ tw }}" data-link-type="social share" data-link-name="Twitter"><span class="c-item-icon twitter"></span><span class="c-item-text">Share</span></a></li>
+          <li><a class="c-item-link" href="{{ link_url }}" download><span class="c-item-icon download"></span><span class="c-item-text">Download</span></a></li>
+          <li><button class="c-item-link js-copy-link" type="button" data-clipboard-text="{{ link_url }}"><span class="c-item-icon link"></span><span class="c-item-text">Copy Link</span></button></li>
         </ul>
       </div>
     </div>
@@ -77,16 +88,18 @@
       'Take action online. Change the outcome offline.',
       'Where you live is one of the most common data points used to target you online. Join us in changing your location on FB and Insta to Waco, TX, so we can throw off political ads and shine a light on voter suppression.',
       'How it Works',
-      '#',
-      'location'
+      'https://media.giphy.com/media/Zaej3GIZTzCI8/giphy.gif',
+      'location',
+      static('img/firefox/campaign/unfck/kermit.gif'),
     ) %}{% endcall %}
 
     {% call item(
       'Tell us what you wanna unfck',
       'Maybe we can find new ways to solve it together. After all, we make internet products, pressure our peers, and speak truth to government power.',
       'How it Works',
-      '#',
+      request.META.HTTP_HOST + static('img/firefox/campaign/unfck/fuckthis.gif'),
       'tell',
+      static('img/firefox/campaign/unfck/fuckthis.gif'),
       include_cta=True
       ) %}
       TODO
@@ -102,32 +115,33 @@
       'Netflix and change',
       'Watch The Social Dilemma on Netflix, a doc made with our friends at the Center for Humane Tech. It explains this whole data situation in words and actions real people can understand.',
       'Watch the Doc',
-      '#',
-      'watch'
+      'https://bukk.it/howidocode.gif',
+      'watch',
+      static('img/firefox/campaign/unfck/popcorn.gif')
       ) %}{% endcall %}
 
       {% call item(
       'Join the anti-establishment',
       'The more people who use independent tech like Firefox, the greater the unfck effect. Get yourself some unfcked search results, email providers, productivity docs and more.',
       'Unfck More',
-      '#',
-      'join'
+      'https://bukk.it/firecode.gif',
+      'join',
+      static('img/firefox/campaign/unfck/firecode.gif')
       ) %}{% endcall %}
   </div>
 
-  <h2 class="c-section-title">Here’s how using Firefox unfucks the internet</h2>
-
   <div class="mzp-l-content mzp-t-content-lg">
-    {{ card(
-      class='mzp-c-card-large',
-      ga_title='',
-      image_url='img/placeholder.png',
-      aspect_ratio='mzp-has-aspect-16-9',
-      link_url='',
-      heading_level=3
-    )}}
+    <div class="mzp-l-card-third">
+      {{ card(
+        title='Here’s how using Firefox unfcks the internet',
+        ga_title='card-unfck',
+        image_url='img/placeholder.png',
+        link_url='',
+        heading_level=3,
+        desc='The chase starts the minute we open our phones, apps or a browser window — often by the maker of that product. Because the more data they collect about you, the more there is to sell you. And the more of you there is to sell. Firefox doesn’t play that game. We keep the online lives of our 300M users out of the Almighty Algorithm.',
+        cta='learn more'
+      )}}
 
-    <div class="mzp-l-card-half">
       {{ card(
         title='And here’s how Firefox unfcks your internetting',
         ga_title='card-firefox',

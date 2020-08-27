@@ -41,7 +41,11 @@
     }
 
     function handleShareLinkClick(e) {
-        var href = e.target.href;
+        if(e.target.tagName == 'SPAN') {
+            var href = e.target.parentElement.href;
+        } else {
+            var href = e.target.href;
+        }
 
         // Open Twitter in a sub window
         openTwitterSubwin(href);
